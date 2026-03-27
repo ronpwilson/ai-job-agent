@@ -1,0 +1,192 @@
+# 🤖 AI Job Agent (CrewAI + FastAPI)
+
+An intelligent **Resume Analysis & Job Matching API** built using **CrewAI, FastAPI, and Groq LLMs**. This project analyzes resumes against job descriptions, calculates ATS scores, suggests improvements, and generates tailored cover letters.
+
+---
+
+## 🚀 Features
+
+* 📄 Resume parsing (PDF → text)
+* 🎯 ATS score calculation
+* 🔍 Resume vs Job Description matching
+* 🧠 AI-powered insights using CrewAI agents
+* ✨ Resume optimization suggestions
+* 📝 Automated cover letter generation
+* ⚡ FastAPI backend for easy integration
+
+---
+
+## 🏗️ Architecture
+
+### Agents Used
+
+* **Resume Agent** → Extracts skills, experience, strengths
+* **Job Agent** → Analyzes job description
+* **Matcher Agent** → Finds gaps & matches
+* **Optimizer Agent** → Improves resume
+* **Cover Letter Agent** → Generates tailored cover letter
+
+### Flow
+
+1. Upload resume (PDF)
+2. Extract text
+3. Run CrewAI pipeline
+4. Generate insights
+5. Return ATS score + analysis
+
+---
+
+## 📂 Project Structure
+
+```
+ai-job-agent/
+│── app/
+│   ├── agents/
+│   ├── tasks/
+│   ├── tools/
+│   ├── config.py
+│   ├── crew.py
+│── api/
+│   └── main.py
+│── requirements.txt
+│── .env
+```
+
+---
+
+## ⚙️ Setup Instructions
+
+### 1. Clone the repository
+
+```bash
+git clone <your-repo-url>
+cd ai-job-agent
+```
+
+### 2. Create virtual environment
+
+```bash
+python -m venv .venv
+.venv\Scripts\activate  # Windows
+source .venv/bin/activate  # Mac/Linux
+```
+
+### 3. Install dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### 4. Add environment variables
+
+Create a `.env` file:
+
+```
+GROQ_API_KEY=your_groq_api_key
+```
+
+---
+
+## ▶️ Run the Application
+
+```bash
+uvicorn api.main:app --reload
+```
+
+API will be available at:
+
+```
+http://127.0.0.1:8000
+```
+
+---
+
+## 📬 API Usage
+
+### Endpoint
+
+```
+POST /analyze
+```
+
+### Request (multipart/form-data)
+
+* `resume` → PDF file
+* `job_description` → Text
+
+### Example (cURL)
+
+```bash
+curl -X POST "http://127.0.0.1:8000/analyze" \
+  -F "resume=@resume.pdf" \
+  -F "job_description=Your job description here"
+```
+
+### Response
+
+```json
+{
+  "ats_score": 78,
+  "analysis": "...AI generated insights..."
+}
+```
+
+---
+
+## 🧠 LLM Configuration
+
+Using Groq model:
+
+```python
+LLM(
+    model="groq/llama-3.3-70b-versatile",
+    api_key=os.getenv("GROQ_API_KEY"),
+    temperature=0.3,
+    max_tokens=500
+)
+```
+
+---
+
+## ⚠️ Known Limitations
+
+* Rate limits on free Groq tier (TPM constraints)
+* Large resumes may cause token overflow
+* Multiple agents increase API usage
+
+---
+
+## 💡 Optimizations (Recommended)
+
+* Trim resume & job description input
+* Reduce number of agents if hitting limits
+* Add retry logic for rate limit handling
+* Use single-agent architecture for production
+
+---
+
+## 🔮 Future Improvements
+
+* Frontend UI (React / Angular)
+* Multi-provider LLM fallback (Groq + Gemini)
+* Resume rewriting export (PDF/DOCX)
+* Interview Q&A generation
+* Job scraping integration
+
+---
+
+## 👨‍💻 Author
+
+**Ron Wilson**
+
+---
+
+## ⭐ Contribute
+
+Feel free to fork the repo and submit PRs!
+
+---
+
+## 📜 License
+
+MIT License
